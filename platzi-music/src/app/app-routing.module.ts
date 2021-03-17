@@ -1,30 +1,25 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { IntroGuard } from './guards/intro.guard';
-import { LoginGuard } from './guards/login.guard';
+import { NgModule } from "@angular/core";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { IntroGuard } from "./guards/intro.guard";
+import { LoginGuard } from "./guards/login.guard";
 
 const routes: Routes = [
+  { path: "", redirectTo: "menu", pathMatch: "full" },
+  { path: "intro", loadChildren: "./intro/intro.module#IntroPageModule" },
+  { path: "login", loadChildren: "./login/login.module#LoginPageModule" },
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
-    canActivate: [IntroGuard,LoginGuard]
+    path: "register",
+    loadChildren: "./register/register.module#RegisterPageModule"
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    path: "menu",
+    loadChildren: "./menu/menu.module#MenuPageModule",
+    canActivate: [LoginGuard, IntroGuard]
   },
   {
-    path: 'intro',
-    loadChildren: () => import('./intro/intro.module').then( m => m.IntroPageModule)
-  },
-  {
-    path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
-  },  {
-    path: 'register',
-    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
-  },
+    path: 'songs-modal',
+    loadChildren: () => import('./songs-modal/songs-modal.module').then( m => m.SongsModalPageModule)
+  }
 
 
 
@@ -36,4 +31,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
